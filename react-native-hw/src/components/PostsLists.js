@@ -53,7 +53,48 @@ const data = [
   },
 ];
 
-const PostsList = ({ navigation }) => {
+const PostsList = ({ navigation, postsArr }) => {
+  if (postsArr.length > 0) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={postsArr}
+          renderItem={({ item }) => (
+            <View style={styles.publicationBox}>
+              <View style={styles.imageBox}>
+                <Image style={styles.image} source={{ uri: item.uri }} />
+              </View>
+              <Text style={styles.title}>{item.title}</Text>
+              <View style={styles.reportBox}>
+                <TouchableOpacity
+                  style={styles.commentBtn}
+                  onPress={() => navigation.navigate("Комментарии")}
+                >
+                  <CommentSVG
+                    style={
+                      item.comment > 0
+                        ? { ...styles.commentImg, color: "#FF6C00" }
+                        : { ...styles.commentImg, color: "#BDBDBD" }
+                    }
+                  />
+                  <Text style={styles.textBtn}>{item.comment}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.placeBtn}
+                  onPress={() => navigation.navigate("Карта", item.location)}
+                >
+                  <LocationSVG style={styles.locationImg} />
+                  <Text>{item.place}</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
+          keyExtractor={() => nanoid(5)}
+        />
+      </SafeAreaView>
+    );
+  }
   return (
     <SafeAreaView style={styles.container}>
       <FlatList

@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 8,
   },
+  imagePhoto: { flex: 1, height: 240, borderRadius: 8 },
   imageBtn: {
     position: "absolute",
     top: 90,
@@ -25,10 +26,11 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 60,
-    backgroundColor: "#FFF",
     alignItems: "center",
     justifyContent: "center",
   },
+  imageBtnDisabled: { backgroundColor: "#FFF" },
+  imageBtnEnabled: { backgroundColor: "rgba(255, 255, 255, 0.3)" },
   imageContainerText: {
     fontFamily: "Roboto-Regular",
     fontWeight: "400",

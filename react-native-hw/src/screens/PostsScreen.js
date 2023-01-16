@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { Text, View } from "react-native";
 
@@ -8,8 +8,16 @@ import styles from "../styles/PostsScreenStyle";
 
 import PostsList from "../components/PostsLists";
 
-const PostsScreen = ({ navigation }) => {
+const PostsScreen = ({ navigation, route }) => {
   const { fontsLoaded, onLayoutRootView } = FontsHooks();
+  const [posts, setPosts] = useState([]);
+  const postData = route.params;
+
+  useEffect(() => {
+    if (postData) {
+      setPosts((prevState) => [...prevState, postData]);
+    }
+  }, [postData]);
 
   if (!fontsLoaded) {
     return null;
@@ -24,7 +32,7 @@ const PostsScreen = ({ navigation }) => {
         </View>
       </View>
 
-      <PostsList navigation={navigation} />
+      <PostsList navigation={navigation} postsArr={posts} />
     </View>
   );
 };

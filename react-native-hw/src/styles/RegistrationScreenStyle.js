@@ -27,7 +27,14 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
   },
-  btnAvatar: {
+  imagePhoto: {
+    flex: 1,
+    objectFit: "contain",
+    borderRadius: 16,
+    width: 120,
+    height: 120,
+  },
+  btnAvatarAdd: {
     position: "absolute",
     bottom: 14,
     right: -13,
@@ -40,6 +47,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: "#FF6C00",
+  },
+  btnAvatarRemove: {
+    position: "absolute",
+    bottom: 14,
+    right: -13,
+    width: 25,
+    height: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    borderRadius: 12.5,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#BDBDBD",
   },
   title: {
     fontFamily: "Roboto-Medium",

@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   View,
+  Modal,
   TextInput,
   TouchableOpacity,
   ImageBackground,
@@ -11,10 +12,15 @@ import {
   Alert,
   TouchableWithoutFeedback,
 } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
-import styles from "../styles/RegistrationScreenStyle";
+import Camera from "../components/CameraComp";
 
 import FontsHooks from "../shared/hooks/fontsHooks";
+import ModalShow from "../shared/hooks/ModalShow";
+import CameraHooks from "../shared/hooks/CameraHooks";
+
+import styles from "../styles/RegistrationScreenStyle";
 
 const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState("");
@@ -22,6 +28,9 @@ const RegistrationScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [focusInputName, setFocusInputName] = useState("");
   const [showPass, setShow] = useState(true);
+  const { isShow, isShowModalToggle } = ModalShow();
+  const cameraHook = CameraHooks();
+  const { photo, setPhoto } = cameraHook;
 
   const { fontsLoaded, onLayoutRootView } = FontsHooks();
 
@@ -50,6 +59,7 @@ const RegistrationScreen = ({ navigation }) => {
     );
     resetForm();
   };
+
   const resetForm = () => {
     setName("");
     setEmail("");
@@ -63,6 +73,14 @@ const RegistrationScreen = ({ navigation }) => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container} onLayout={onLayoutRootView}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={isShow}
+          onRequestClose={() => isShowModalToggle()}
+        >
+          <Camera showModal={isShowModalToggle} cameraProps={cameraHook} />
+        </Modal>
         <ImageBackground
           source={require("../shared/images/mountainBg.jpg")}
           resizeMode="cover"
@@ -70,12 +88,27 @@ const RegistrationScreen = ({ navigation }) => {
         >
           <View style={styles.containerForm}>
             <View style={styles.avatarContainer}>
-              <TouchableOpacity style={styles.btnAvatar}>
-                <Image
-                  style={styles.avatar}
-                  source={require("../shared/images/add.png")}
-                />
-              </TouchableOpacity>
+              {photo && (
+                <Image style={styles.imagePhoto} source={{ uri: photo }} />
+              )}
+              {!photo ? (
+                <TouchableOpacity
+                  style={styles.btnAvatarAdd}
+                  onPress={() => isShowModalToggle()}
+                >
+                  <Image
+                    style={styles.avatar}
+                    source={require("../shared/images/add.png")}
+                  />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.btnAvatarRemove}
+                  onPress={() => setPhoto(null)}
+                >
+                  <Feather name="x" size={13} color="#BDBDBD" />
+                </TouchableOpacity>
+              )}
             </View>
             <Text style={styles.title}>Регистрация</Text>
             <View style={{ marginBottom: 16 }}>

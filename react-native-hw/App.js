@@ -4,11 +4,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Feather } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import LoginScreen from "./screens/LoginScreen";
-import RegistrationScreen from "./screens/RegistrationScreen";
-import Home from "./screens/Home";
-import CommentsScreen from "./screens/CommentsScreen";
-import MapScreen from "./screens/MapScreen";
+import LoginScreen from "./src/screens/LoginScreen";
+import RegistrationScreen from "./src/screens/RegistrationScreen";
+import Home from "./src/screens/Home";
+import CommentsScreen from "./src/screens/CommentsScreen";
+import MapScreen from "./src/screens/MapScreen";
 
 const MainStack = createStackNavigator();
 

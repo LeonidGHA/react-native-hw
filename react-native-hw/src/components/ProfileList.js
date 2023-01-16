@@ -90,10 +90,7 @@ const ProfileList = ({ navigation }) => {
                 />
                 <Text style={styles.textBtn}>{item.like}</Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.placeBtn}
-                onPress={() => navigation.navigate("Карта")}
-              >
+              <TouchableOpacity style={styles.placeBtn}>
                 <LocationSVG style={styles.locationImg} />
                 <Text>{item.place}</Text>
               </TouchableOpacity>
