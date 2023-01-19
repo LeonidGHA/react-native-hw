@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  container: {
+    // paddingBottom: 45,
+  },
   publicationBox: {
     marginBottom: 35,
   },
@@ -13,8 +16,6 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center",
-    height: 240,
-    borderRadius: 8,
   },
   title: {
     fontFamily: "Roboto-Medium",
@@ -30,8 +31,12 @@ const styles = StyleSheet.create({
   commentBtn: {
     flexDirection: "row",
     alignItems: "center",
+    marginRight: 27,
   },
   commentImg: { width: 24, height: 24, color: "#FF6C00" },
+  likeBtn: { flexDirection: "row", alignItems: "center" },
+
+  likeImg: { width: 24, height: 24, color: "#FF6C00" },
   textBtn: {
     fontFamily: "Roboto-Regular",
     marginLeft: 9,

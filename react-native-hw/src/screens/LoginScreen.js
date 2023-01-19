@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  StyleSheet,
   Text,
   View,
   TextInput,
@@ -11,12 +11,16 @@ import {
   Alert,
   TouchableWithoutFeedback,
 } from "react-native";
+import FontsHooks from "../shared/hooks/fontsHooks";
+
+import { logIn } from "../redux/auth/auth-operations";
+import { errMessage } from "../redux/auth/auth-selectors";
 
 import styles from "../styles/LoginScreenStyle";
 
-import FontsHooks from "../shared/hooks/fontsHooks";
-
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const selector = useSelector(errMessage);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShow] = useState(true);
@@ -34,12 +38,17 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const submitForm = () => {
-    // if (email === "" || password === "") {
-    //   Alert.alert(" fill out all the fields of the form");
+    if (email === "" || password === "") {
+      Alert.alert(" fill out all the fields of the form");
+      return;
+    }
+    // dispatch(logIn({ email, password }));
+    // if (selector !== null) {
+    //   Alert.alert(`${selector}`);
     //   return;
     // }
-    Alert.alert("logForm", `email: ${email} password: ${password}`);
-    navigation.navigate("Home");
+
+    dispatch(logIn({ email, password }));
     resetForm();
   };
   const resetForm = () => {

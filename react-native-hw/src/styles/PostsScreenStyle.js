@@ -12,6 +12,10 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: "center",
+    width: 60,
+    height: 60,
+    borderRadius: 16,
+    objectFit: "contain",
   },
   userContainer: {
     flexDirection: "row",

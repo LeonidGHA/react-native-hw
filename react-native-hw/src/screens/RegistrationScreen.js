@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Text,
   Image,
@@ -20,6 +21,8 @@ import FontsHooks from "../shared/hooks/fontsHooks";
 import ModalShow from "../shared/hooks/ModalShow";
 import CameraHooks from "../shared/hooks/CameraHooks";
 
+import { registration } from "../redux/auth/auth-operations";
+
 import styles from "../styles/RegistrationScreenStyle";
 
 const RegistrationScreen = ({ navigation }) => {
@@ -31,7 +34,8 @@ const RegistrationScreen = ({ navigation }) => {
   const { isShow, isShowModalToggle } = ModalShow();
   const cameraHook = CameraHooks();
   const { photo, setPhoto } = cameraHook;
-
+  const dispatch = useDispatch();
+  const photoType = "Avatar";
   const { fontsLoaded, onLayoutRootView } = FontsHooks();
 
   const handleName = (text) => {
@@ -53,10 +57,7 @@ const RegistrationScreen = ({ navigation }) => {
       Alert.alert(" fill out all the fields of the form");
       return;
     }
-    Alert.alert(
-      "RegForm",
-      `login: ${name} email: ${email} password: ${password}`
-    );
+    dispatch(registration({ email, password, name, photo }));
     resetForm();
   };
 
@@ -79,7 +80,11 @@ const RegistrationScreen = ({ navigation }) => {
           visible={isShow}
           onRequestClose={() => isShowModalToggle()}
         >
-          <Camera showModal={isShowModalToggle} cameraProps={cameraHook} />
+          <Camera
+            showModal={isShowModalToggle}
+            cameraProps={cameraHook}
+            photoType={photoType}
+          />
         </Modal>
         <ImageBackground
           source={require("../shared/images/mountainBg.jpg")}

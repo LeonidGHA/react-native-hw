@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Text,
   Modal,
@@ -11,18 +12,23 @@ import {
   TouchableWithoutFeedback,
   Alert,
 } from "react-native";
+import { Feather, Ionicons } from "@expo/vector-icons";
+
+import Camera from "../components/CameraComp";
 
 import FontsHooks from "../shared/hooks/fontsHooks";
 import CameraHooks from "../shared/hooks/CameraHooks";
 import ModalShow from "../shared/hooks/ModalShow";
 import LocationHooks from "../shared/hooks/LocationHooks";
-import { Feather, Ionicons } from "@expo/vector-icons";
 
-import Camera from "../components/CameraComp";
+import { uploadPostToServer } from "../shared/requestFirebase/db/db";
+
 import styles from "../styles/CreatePostsScreenStyle";
 
 const CreatePostsScreen = ({ navigation }) => {
   const { fontsLoaded, onLayoutRootView } = FontsHooks();
+  const uid = useSelector((state) => state.auth.user.uid);
+  const userName = useSelector((state) => state.auth.user.userName);
   const { isShow, isShowModalToggle } = ModalShow();
   const cameraHook = CameraHooks();
   const { photo, setPhoto } = cameraHook;
@@ -47,10 +53,9 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const createPostSubmit = () => {
     getLocation();
-    Alert.alert(
-      `Title: ${title} place:${place} Location:${location.coords.latitude} , ${location.coords.longitude}`
-    );
-    const data = { uri: photo, title, place, location };
+
+    const data = { photo, title, place, location, userName, uid };
+    uploadPostToServer(data);
     clearPosts();
     navigation.navigate("Публикации", data);
   };

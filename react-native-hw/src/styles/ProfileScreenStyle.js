@@ -6,17 +6,18 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
   },
   containerProfile: {
     marginTop: 147,
+    flex: 1,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: "#fff",
     paddingLeft: 16,
     paddingRight: 16,
     paddingTop: 92,
-    paddingBottom: 78,
+    paddingBottom: 60,
   },
   avatarContainer: {
     position: "absolute",
@@ -27,7 +28,14 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
   },
-  btnAvatar: {
+  imagePhoto: {
+    flex: 1,
+    objectFit: "contain",
+    borderRadius: 16,
+    width: 120,
+    height: 120,
+  },
+  btnAvatarAdd: {
     position: "absolute",
     bottom: 14,
     right: -13,
@@ -40,6 +48,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     borderColor: "#FF6C00",
+  },
+  btnAvatarRemove: {
+    position: "absolute",
+    bottom: 14,
+    right: -13,
+    width: 25,
+    height: 25,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    borderRadius: 12.5,
+    borderWidth: 1,
+    borderStyle: "solid",
+    borderColor: "#BDBDBD",
   },
   title: {
     fontFamily: "Roboto-Medium",
