@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Feather } from "@expo/vector-icons";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../shared/firebase/config";
+
 import {
   Text,
   View,
@@ -35,13 +36,23 @@ const ProfileScreen = ({ navigation }) => {
   const cameraHook = CameraHooks();
   const { photo, setPhoto } = cameraHook;
   const photoType = "Avatar";
+  const sortPosts = posts.sort(
+    (a, b) => b?.timestamp.seconds - a?.timestamp.seconds
+  );
 
   useEffect(() => {
     const postRef = collection(db, "posts");
     const q = query(postRef, where("uid", "==", `${userInfo.uid}`));
-    const unscrible = onSnapshot(q, (snapshot) => {
-      setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
+    const unscrible = onSnapshot(
+      q,
+      (snapshot) => {
+        setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      },
+      (error) => {
+        return error;
+      }
+    );
+
     return () => unscrible();
   }, []);
   useEffect(() => {
@@ -49,7 +60,7 @@ const ProfileScreen = ({ navigation }) => {
       dispatch(updateProfileUser({ photo }));
     }
   }, [photo]);
-  // console.log(posts);
+
   if (!fontsLoaded) {
     return null;
   }
@@ -79,7 +90,7 @@ const ProfileScreen = ({ navigation }) => {
             ) : (
               <Image
                 style={styles.imagePhoto}
-                source={{ uri: `${userInfo.photoUrl}` }}
+                source={{ uri: userInfo.photoUrl }}
               />
             )}
             {!photo ? (
@@ -109,7 +120,7 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           <Text style={styles.title}>{userInfo.userName}</Text>
           {posts.length > 0 && (
-            <PostsList navigation={navigation} dataPosts={posts} />
+            <PostsList navigation={navigation} dataPosts={sortPosts} />
           )}
         </View>
       </ImageBackground>

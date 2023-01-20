@@ -13,9 +13,9 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
-import { nanoid } from "nanoid";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../shared/firebase/config";
+import { nanoid } from "nanoid";
 import { Feather } from "@expo/vector-icons";
 
 import FontsHooks from "../shared/hooks/fontsHooks";
@@ -28,19 +28,28 @@ import styles from "../styles/CommentsScreenStyle";
 const CommentsScreen = ({ route }) => {
   const [comment, setComment] = useState("");
   const [allComments, setAllComments] = useState([]);
-  const { userName, photoUrl } = useSelector(dataUser);
-  const { id, urlPhoto, uid } = route.params;
+  const { userName, photoUrl, uid } = useSelector(dataUser);
+  const { id, urlPhoto } = route.params;
   const { fontsLoaded, onLayoutRootView } = FontsHooks();
-  // console.log(allComments);
+
+  const sortComents = allComments.sort(
+    (a, b) => b?.timestamp?.seconds - a?.timestamp?.seconds
+  );
 
   useEffect(() => {
     const postRef = collection(db, "posts", `${id}`, "comments");
 
-    const unscrible = onSnapshot(postRef, (snapshot) => {
-      setAllComments(
-        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
-    });
+    const unscrible = onSnapshot(
+      postRef,
+      (snapshot) => {
+        setAllComments(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      },
+      (error) => {
+        return error;
+      }
+    );
     return () => unscrible();
   }, []);
 
@@ -57,7 +66,7 @@ const CommentsScreen = ({ route }) => {
       return;
     }
     addComment({ id, comment, userName, photoUrl });
-    console.log(comment);
+
     resetForm();
   };
 
@@ -73,23 +82,40 @@ const CommentsScreen = ({ route }) => {
         <SafeAreaView style={styles.containerList}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            data={allComments}
-            renderItem={({ item }) => (
-              <View style={styles.containerComment}>
-                <View style={styles.avatarWrapper}>
-                  <Image
-                    style={styles.avatar}
-                    source={{ uri: item.photoUrl }}
-                  />
-                </View>
-                <View style={styles.commentWrapper}>
-                  <Text style={styles.commnetText}>{item.comment}</Text>
-                  <View>
-                    <Text style={styles.timeText}>{item.date}</Text>
+            data={sortComents}
+            renderItem={({ item }) =>
+              userName === item.userName ? (
+                <View style={styles.containerCommentUser}>
+                  <View style={styles.avatarWrapperUser}>
+                    <Image
+                      style={styles.avatarUser}
+                      source={{ uri: item.photoUrl }}
+                    />
+                  </View>
+                  <View style={styles.commentWrapperUser}>
+                    <Text style={styles.commnetTextUser}>{item.comment}</Text>
+                    <View>
+                      <Text style={styles.timeTextUser}>{item.date}</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            )}
+              ) : (
+                <View style={styles.containerComment}>
+                  <View style={styles.avatarWrapper}>
+                    <Image
+                      style={styles.avatar}
+                      source={{ uri: item.photoUrl }}
+                    />
+                  </View>
+                  <View style={styles.commentWrapper}>
+                    <Text style={styles.commnetText}>{item.comment}</Text>
+                    <View>
+                      <Text style={styles.timeText}>{item.date}</Text>
+                    </View>
+                  </View>
+                </View>
+              )
+            }
             keyExtractor={() => nanoid(5)}
           />
         </SafeAreaView>

@@ -6,10 +6,9 @@ import {
   collection,
   addDoc,
   doc,
-  onSnapshot,
-  query,
-  where,
   updateDoc,
+  serverTimestamp,
+  increment,
 } from "firebase/firestore";
 import { nanoid } from "nanoid";
 
@@ -37,7 +36,7 @@ export const uploadPostToServer = async ({
 }) => {
   try {
     const photoUrl = await uploadPhotoToServer(photo);
-    const docRef = await addDoc(collection(db, "posts"), {
+    await addDoc(collection(db, "posts"), {
       photoUrl,
       title,
       place,
@@ -45,20 +44,10 @@ export const uploadPostToServer = async ({
       userName,
       uid,
       like: 0,
+      comments: 0,
+      timestamp: serverTimestamp(),
     });
-  } catch (e) {
-    console.log("Error adding document: ", e);
-  }
-};
-
-export const getUserPosts = async (data) => {
-  const { setPosts, userInfo } = data;
-  console.log(userInfo);
-  const postRef = collection(db, "posts");
-  const q = query(postRef, where("uid", "==", `${userInfo.uid}`));
-  onSnapshot(q, (snapshot) => {
-    setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  });
+  } catch (e) {}
 };
 
 export const addComment = async ({ id, comment, userName, photoUrl }) => {
@@ -66,13 +55,18 @@ export const addComment = async ({ id, comment, userName, photoUrl }) => {
     comment,
     userName,
     photoUrl,
-    date: new Date().toLocaleString("en-GB"),
+    timestamp: serverTimestamp(),
+    date: new Date().toLocaleString(),
+  });
+  const colRef = doc(db, "posts", `${id}`);
+  await updateDoc(colRef, {
+    comments: increment(1),
   });
 };
 
 export const addLike = async ({ id, like }) => {
   const colRef = doc(db, "posts", `${id}`);
   await updateDoc(colRef, {
-    like: like + 1,
+    like: increment(1),
   });
 };

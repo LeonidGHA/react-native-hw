@@ -40,19 +40,20 @@ const PostsList = ({ navigation, dataPosts }) => {
                 onPress={() =>
                   navigation.navigate("Комментарии", {
                     id: item.id,
-                    uid: item.uid,
+                    uidUser: item.uid,
                     urlPhoto: item.photoUrl,
+                    nickName: item.userName,
                   })
                 }
               >
                 <CommentSVG
                   style={
-                    item.comment > 0
+                    item.comments > 0
                       ? { ...styles.commentImg, color: "#FF6C00" }
                       : { ...styles.commentImg, color: "#BDBDBD" }
                   }
                 />
-                <Text style={styles.textBtn}>Comment</Text>
+                <Text style={styles.textBtn}>{item.comments}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.likeBtn}

@@ -16,11 +16,21 @@ const PostsScreen = ({ navigation, route }) => {
   const { fontsLoaded, onLayoutRootView } = FontsHooks();
   const [posts, setPosts] = useState([]);
 
+  const sortPosts = posts.sort(
+    (a, b) => b?.timestamp?.seconds - a?.timestamp?.seconds
+  );
+
   useEffect(() => {
     const postRef = collection(db, "posts");
-    const unscrible = onSnapshot(postRef, (snapshot) => {
-      setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
+    const unscrible = onSnapshot(
+      postRef,
+      (snapshot) => {
+        setPosts(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      },
+      (error) => {
+        return error;
+      }
+    );
 
     return () => unscrible();
   }, []);
@@ -45,7 +55,7 @@ const PostsScreen = ({ navigation, route }) => {
         </View>
       </View>
       {posts.length > 0 && (
-        <PostsList navigation={navigation} dataPosts={posts} />
+        <PostsList navigation={navigation} dataPosts={sortPosts} />
       )}
     </View>
   );

@@ -12,7 +12,7 @@ const initialState = {
     uid: "",
     userName: "",
     email: "",
-    photoUrl: "",
+    photoUrl: null,
   },
   isLogIn: false,
   error: null,

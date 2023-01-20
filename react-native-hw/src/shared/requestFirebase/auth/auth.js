@@ -13,7 +13,6 @@ export const registrationDB = async ({ email, password, name, photo }) => {
   await createUserWithEmailAndPassword(auth, email, password);
   const photoUser = await uploadPhotoToServer(photo);
   const defValuePhoto = photo ? photoUser : null;
-  console.log(defValuePhoto);
   await updateProfile(auth.currentUser, {
     displayName: name,
     photoURL: defValuePhoto,

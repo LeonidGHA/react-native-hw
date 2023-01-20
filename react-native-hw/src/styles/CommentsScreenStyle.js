@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     objectFit: "contain",
   },
   commentWrapper: {
-    width: "100%",
+    flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.03)",
     borderRadius: 6,
     borderTopLeftRadius: 0,
@@ -52,6 +52,48 @@ const styles = StyleSheet.create({
     textAlign: "left",
   },
   timeText: {
+    fontFamily: "Roboto-Regular",
+    color: "#BDBDBD",
+    fontSize: 10,
+    fontWeight: "400",
+    lineHeight: 12,
+    textAlign: "left",
+  },
+  containerCommentUser: {
+    flexDirection: "row-reverse",
+    marginBottom: 24,
+  },
+  avatarWrapperUser: {
+    width: 28,
+    height: 28,
+    borderRadius: 28,
+    backgroundColor: "rgba(0, 0, 0, 0.03);",
+    marginLeft: 16,
+  },
+  avatarUser: {
+    width: 28,
+    height: 28,
+    borderRadius: 28,
+    objectFit: "contain",
+  },
+  commentWrapperUser: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.03)",
+
+    borderRadius: 6,
+    borderTopRightRadius: 0,
+    padding: 16,
+  },
+  commnetTextUser: {
+    fontFamily: "Roboto-Regular",
+    marginBottom: 8,
+    color: "#212121",
+    fontSize: 13,
+    fontWeight: "400",
+    lineHeight: 18,
+    textAlign: "left",
+  },
+  timeTextUser: {
     fontFamily: "Roboto-Regular",
     color: "#BDBDBD",
     fontSize: 10,
