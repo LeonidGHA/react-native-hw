@@ -8,14 +8,20 @@ import styles from "../styles/CameraStyle";
 const CameraComp = ({ showModal, cameraProps }) => {
   const { setCamera, takePhoto, type, toggleCameraType } = cameraProps;
 
-  const snapPhoto = () => {
-    takePhoto();
+  const snapPhoto = async () => {
+    await takePhoto();
     showModal();
   };
 
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera} ref={setCamera} type={type}>
+      <Camera
+        style={styles.camera}
+        ref={(ref) => {
+          setCamera(ref);
+        }}
+        type={type}
+      >
         <TouchableOpacity style={styles.snapBtn} onPress={() => snapPhoto()}>
           <View style={styles.snapBtnCircle}></View>
         </TouchableOpacity>

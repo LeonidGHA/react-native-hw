@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../shared/firebase/config";
+import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { Feather } from "@expo/vector-icons";
 
@@ -83,8 +84,8 @@ const CommentsScreen = ({ route }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={sortComents}
-            renderItem={({ item }) =>
-              userName === item.userName ? (
+            renderItem={({ item }) => {
+              return userName === item.userName ? (
                 <View style={styles.containerCommentUser}>
                   <View style={styles.avatarWrapperUser}>
                     <Image
@@ -114,8 +115,8 @@ const CommentsScreen = ({ route }) => {
                     </View>
                   </View>
                 </View>
-              )
-            }
+              );
+            }}
             keyExtractor={() => nanoid(5)}
           />
         </SafeAreaView>

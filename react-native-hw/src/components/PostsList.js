@@ -1,4 +1,5 @@
 import React from "react";
+import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import {
   Text,

@@ -10,6 +10,7 @@ import {
   serverTimestamp,
   increment,
 } from "firebase/firestore";
+import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 
 export const uploadPhotoToServer = async (photo) => {

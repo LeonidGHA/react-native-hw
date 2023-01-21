@@ -37,7 +37,7 @@ const ProfileScreen = ({ navigation }) => {
   const { photo, setPhoto } = cameraHook;
   const photoType = "Avatar";
   const sortPosts = posts.sort(
-    (a, b) => b?.timestamp.seconds - a?.timestamp.seconds
+    (a, b) => b?.timestamp?.seconds - a?.timestamp?.seconds
   );
 
   useEffect(() => {

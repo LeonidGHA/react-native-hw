@@ -26,7 +26,11 @@ const Home = () => {
         tabBarInactiveTintColor: "rgba(33, 33, 33, 0.8)",
         tabBarActiveBackgroundColor: "#FF6C00",
         tabBarShowLabel: false,
-        tabBarItemStyle: { borderRadius: 20, width: 70, height: 40 },
+        tabBarItemStyle: {
+          borderRadius: 20,
+          width: 70,
+          height: 40,
+        },
         tabBarIcon: ({ focused, color, size }) => {
           if (route.name === "Создать публикацию") {
             return <Ionicons name="add" size={24} color={color} />;

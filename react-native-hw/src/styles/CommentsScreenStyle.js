@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   commentWrapperUser: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.03)",
-
     borderRadius: 6,
     borderTopRightRadius: 0,
     padding: 16,

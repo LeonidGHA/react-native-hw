@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   tabStyle: {
-    flex: 0.07,
+    flex: 0.05,
     alignItems: "center",
     paddingTop: 9,
     paddingHorizontal: 80,

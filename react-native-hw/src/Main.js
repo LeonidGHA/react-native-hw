@@ -26,9 +26,11 @@ const Main = () => {
   const logInUser = useSelector(isLogin);
   const isLoading = useSelector(isLoad);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(userAuth({ userIsAuth, setUserIsAuth }));
   }, [!userIsAuth]);
+
   if (isLoading) {
     return (
       <View style={styles.loadContainer}>
